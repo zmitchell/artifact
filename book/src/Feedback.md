@@ -1,3 +1,8 @@
+# Reporting an Issue
+
+If you have any issues with artifact, please report a bug at it's [issue
+tracker][0].
+
 # Feedback on Artifact
 
 Below is feedback I have compiled on artifact so far. If you would like to

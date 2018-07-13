@@ -1,3 +1,73 @@
+# [Simple Quality][1]
+*A short guide to quality best practices for developers.*
+
+By Garrett Berg <vitiral@gmail.com>
+
+## Introduction
+This is a short and open-source leaflet aimed at helping software developers
+improve their software quality. It is also the primary user guide for the design
+documentation tool [artifact][4]. Its targeted audience are those who:
+- Know at least one programming language.
+- Know revision control. If you don't know one, learn git.
+- Want a brief guide on how to have fewer bugs, re-designs and headaches
+  in all of their projects.
+
+This book is shiped as part of the artifact Web UI and can also be read at
+(**TODO: add link**).
+
+If you have suggestions or edits, please [open a ticket](./Feedback.html).
+
+The goal of this book is to make developing software simpler and more fun. Think
+back to the time you first learned revision control. Think about how you were
+backing up files before then? Maybe you were copying folders to some `backups`
+folder?  Maybe you were not backing up at all?
+
+However you did (or didn't) track your changes, think about your life before and after
+revision control. Things were a lot different, and all you had to learn in order
+to use revision control were:
+- Some simple vocabulary.
+- An easy to use tool.
+- A new way of looking at things.
+
+This is the central premise of this book: you don't need to understand technical
+jargon or complex test methodologies to realize huge gains in the quality of
+your software. Some simple vocabulary, new tools and new ways of looking at
+things are all you need.
+
+> All code/documentation examples in this book are public domain. The rest of
+> the book is licensed under the [GNU GPLv3 License][3].
+
+[1]: https://vitiral.gitbooks.io/simple-quality/content/
+[2]: https://github.com/vitiral/simple-quality/issues
+[3]: https://www.google.com/search?q=gnu+gpl+v3&ie=utf-8&oe=utf-8
+[4]: https://github.com/vitiral
+
+
+## Why This Book Exists
+There is a lack of good documentation unifying and extending quality best
+practices. While there have been several advancements made in how to develop
+quality software, they have largely been piecemeal and lacked the tools to
+fit them all together. Several of the recent advancements include:
+- better revision control tools and best practices
+- new emphasis on unit tests as part of the development process
+- linters and auto-formatters to help projects have easy to read code
+- more emphasis on documentation, including inline developer documentation
+- the agile process and associated tools
+
+One of the things in common about all of these: developers tend to agree
+that their lives are **better** after using them. Programming is easier,
+more fun and more fulfilling. However, all of these lack the processes,
+tools and vocabulary necessary to bring them together into an organized whole.
+
+This book will give you the knowledge of how to unify and track all these quality
+best practices as well as give you an intro to artifact, the open-source documentation
+tool artifact. The tools presented in this book will not only allow you to write
+better software, but will help your day-to-day workflow in the same ways that
+good unit tests do.
+
+
+
+
 # Interactive artifact tutorial
 Welcome to the in depth artifact tutorial! This tutorial is designed to be run
 interactively, guiding you through the requirements gathering, detailed design
@@ -5,92 +75,28 @@ phase, and implementation of a project -- as well as fixing issues that might
 come up.
 
 In order to follow along, you must have artifact installed somewhere on your
-`PATH`. Check out the [Installation Guide][1] for instructions.
+`PATH`. Check out the [Installation Guide](./Installation.html) for instructions.
 
-[1]: https://github.com/vitiral/artifact/blob/master/docs/Installation.md
+To begin, create an empty directory anywhere on your system. I would call it `learn-art/`
+or something along those lines. Then run these commands:
 
---------------------------------------------------
-## Tutorial Stage 1: follow along document
-Start out by running `art tutorial` and read the created
-[`tutorial.toml`](tutorial.toml) file that is created. This will give you an
-overview of artifact syntax and how to write design docs
-
---------------------------------------------------
-## Tutorial Stage 2: purpose documents
-> **Run `art tutorial 2` to set the local directory to this stage**
-
-A few changes have been made to your local directory:
- - the `flash_card_challenge.htm` file has been added
- - the `design/` folder has been added with [`purpose.toml`](purpose.toml)
- - [`.art/settings.toml`](settings-1.toml) has been updated with a new
-   `artifact_paths`
-
-> ### Exercise 1:
-> Before we go any further, lets first explore the web-ui that you can use
-> along side the command line tools. Type `art serve` and go to:
-> http://127.0.0.1:5373/#artifacts/req-purpose
->
-> I recommend doing most work in text files for this short interactive
-> tutorial, but its good to know that the web-ui exists in case you find
-> it helpful.
->
-> Note that if you prefer to read this tutorial on the web, you can go to:
-> https://github.com/vitiral/artifact/blob/master/src/cmd/data/tutorial.md
-
-Open `flash_card_challenge.htm` in a browser (or go [here][2] and skim through
-the project that we will be executing. Don't worry! You don't need to know
-python to follow along with this tutorial.
-
-Now open [`design/purpose.toml`](purpose.toml). This is a rough attempt to
-translate the ideas in `flash_card_challenge.htm` into purpose statements.
-
-Purpose statements are important because they document why your project even
-exists -- something that is important to know as you develop it! Without
-them, it can be easy to loose sight of what your project is trying to
-accomplish and can be difficult to keep track of which features are
-useful and which are not.
-
-In addition, purpose statements allow you to specify what your project will
-accomplish, but then complete it in pieces. **artifact** will help you track
-which part is complete!
-
-`purpose.toml` also contains the high level specifications of the program.
-High-level specifications allows you to lay out your ideas for how a project
-should be approached before you actually write any code. It also allows you to
-write out "TODOs" that you think **should** be done, but you maybe won't get
-done in your minimum viable product.
-
-> ### Exercise 2:
-> Review [`design/purpose.toml`](purpose.toml) and make sure it makes sense.
-> Does this accurately summarize the application we are trying to build? Are
-> there any purpose requirements missing?
-
-Now run:
 ```
-    art ls
+cd learn-art/
+art init
 ```
 
-This displays all the artifacts you just looked at, but colorizes them according
-to whether they are complete or not. Right now, nothing is done so all you
-see is red.
+You should now have a folder called `design/` as well as an
+`.art/settings.toml` file (note: `.art` may be hidden in your system, make sure
+to show hidden folders).
 
-Now run:
+Run `art ls`, you should see something like:
+
 ```
-    art ls SPC-cmd -l
+spc% tst%  | name         | parts
+0.0  0.0   | REQ-purpose  |
 ```
 
-This calls to list only one artifact (SPC-cmd), and displays it in the "long"
-format (`-l`)
-
-Try `art ls purpose -p` to search for all items with "purpose" in the
-name, you can see that three purpose requirements appear.
-
-> ### Exercise 3:
-> Play around with the `art ls` command a little more to get used to it,
-> we will be using it a lot. Get help with `art ls -h`
-
-Once you are done, continue onto stage 3.
-
+If all of these things check out, then you are good to go!
 
 --------------------------------------------------
 ## Tutorial Stage 3: detailed design and test design of the loading function

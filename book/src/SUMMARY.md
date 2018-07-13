@@ -1,10 +1,15 @@
 # Summary
 
 - [Introduction](./Introduction.md)
+
 - [Instalation](./Installation.md)
+
 - [Example](./ExampleFile.md)
+
 - [Cheat Sheet](./CheatSheet.md)
-- [Interactive Tutorial](./InteractiveTutorial.md)
+
+- [Simple Quality Leaflet](./SimpleQuality.md)
+  - [Writing Your Purpose](./Purpose.md)
 
 - [Addendum](./Addendum.md)
   - [FAQ](./FAQ.md)
