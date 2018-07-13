@@ -11,9 +11,9 @@ repeating intention or forgetting to specify it all together.
 Let's get this out of the way first: except for some of the simplest libraries,
 developer documents should **not** be your only design documents! The things
 your users are concerned about should almost never be the implementation details
-of your project, and unless your library is so simple that all design decisions
-fit in a few sentences, your code documentation won't cut it for preserving
-intent or pointing out the relationships between components.
+or architecture of your project, and unless your library is so simple that all
+design decisions fit in a few sentences, your code documentation won't cut it
+for preserving intent or pointing out the relationships between components.
 
 This is not to say that user (README) and developer (code) documentation are not
 critical to a project's quality: they absolutely are. But they should not
@@ -22,7 +22,9 @@ simplest projects.
 
 Keep in mind that it is always best practice to try and split your project into
 as many small libraries as possible. Simplicity should always be the number one
-goal. However, not all applications and libraries can be made so simple.
+goal. However, not all applications and libraries can be made so simple, and even
+in such cases you still might want an overall architecture for _how to achieve
+such simplicity._
 
 So, here are the primary tools that every developer should have under their belt
 to increase the quality of their software and their productivity.
@@ -64,17 +66,18 @@ most important for your future development. The problem is that it can't really
 be taught except to say: always look for ways you can automate pain points and
 increase simplicity. Develop tools that make it easy to interface with your
 product, or hook into annoying legacy test software, or develop tests in a
-simpler way. By making everyone's life easier, you will drastically increase
-quality
+simpler way. These tools can be a script, a new way of doing things or even
+just a library/module. By making everyone's life easier, you will drastically
+increase quality
 
 ### [artifact][7]: the design doc tool made for developers
-artifact will be our bread and butter for writing and linking our design to our
+Artifact will be our bread and butter for writing and linking our design to our
 source code and then hosting them as a webpage. This tool was designed
 specifically to facilitate the philosophy of software quality presented in this
 book. Artifact will be the topic of the next chapter.
 
 At the end of the process, we will be able to host our design docs just like the
-artifact project [design docs][8].
+artifact project's [design docs][8].
 
 [1]: https://git-scm.com/
 [2]: http://rosettacode.org/wiki/Documentation
