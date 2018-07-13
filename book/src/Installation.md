@@ -1,4 +1,5 @@
-This guide will cover how to install Artifact.
+This is the installation guide. For more information see the
+[project home page](../README.md)
 
 ## Typical Installation
 artifact is compiled for linux, mac and windows. You can find releases on the
