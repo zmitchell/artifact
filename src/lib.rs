@@ -50,6 +50,7 @@ use quicli::prelude::*;
 mod dev_prelude;
 
 mod check;
+mod export;
 mod fmt;
 mod init;
 mod ls;
@@ -66,16 +67,18 @@ pub fn run() -> Result<i32> {
         .subcommand(check::Check::clap())
         .subcommand(fmt::Fmt::clap())
         .subcommand(ls::Ls::clap())
-        .subcommand(serve::Serve::clap());
+        .subcommand(serve::Serve::clap())
+        .subcommand(export::Export::clap());
 
     let matches = app.get_matches();
 
     match matches.subcommand() {
-        ("ls", Some(args)) => ls::run(ls::Ls::from_clap(&args)),
         ("init", Some(args)) => init::run(init::Init::from_clap(&args)),
         ("check", Some(args)) => check::run(check::Check::from_clap(&args)),
         ("fmt", Some(args)) => fmt::run(fmt::Fmt::from_clap(&args)),
+        ("ls", Some(args)) => ls::run(ls::Ls::from_clap(&args)),
         ("serve", Some(args)) => serve::run(serve::Serve::from_clap(&args)),
+        ("export", Some(args)) => export::run(export::Export::from_clap(&args)),
         (sub, _) => unimplemented!("sub: {}", sub),
     }
 }
