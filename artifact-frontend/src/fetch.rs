@@ -38,6 +38,7 @@ fn handle_response_initial(response: http::Response<String>) -> Msg {
     };
 
     let body = response.into_body();
+    println!("body: {}", body);
     let response: jrpc::Response<ProjectInitialSer> =
         expect!(json::from_str(&body), "response-serde");
 
