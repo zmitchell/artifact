@@ -56,6 +56,7 @@ impl Component<Context> for Model {
         let url = router.current_url();
 
         let mut model = Model {
+            web_type: WebType::Static,
             shared: Arc::new(project),
             view: View::from_hash(&url.fragment().unwrap_or_default()),
             router: Arc::new(router),
@@ -71,7 +72,7 @@ impl Component<Context> for Model {
         model.nav.search.on = true;
         model.nav.editing.on = true;
         // fetch::handle_fetch_project(&mut model, context, false);
-        fetch::handle_fetch_initial(&mut model, context);
+        fetch::start_fetch_initial(&mut model, context);
         model
     }
 
@@ -105,10 +106,10 @@ fn update_model(model: &mut Model, msg: Msg, context: &mut Env<Context, Model>) 
             if let Some(project) = init.project {
                 model.shared = Arc::new(project);
             }
-            // TODO: store the type
+            model.web_type = init.web_type;
         },
-        Msg::FetchProject { reload } => return fetch::handle_fetch_project(model, context, reload),
-        Msg::SendUpdate(ids) => return fetch::handle_send_update(model, context, ids),
+        Msg::FetchProject { reload } => return fetch::start_fetch_project(model, context, reload),
+        Msg::SendUpdate(ids) => return fetch::start_send_update(model, context, ids),
         Msg::RecvProject(jid, project) => fetch::handle_recv_project(model, &jid, project),
         Msg::RecvError(logs) => {
             model.push_logs(logs);

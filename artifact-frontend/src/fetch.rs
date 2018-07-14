@@ -14,7 +14,7 @@ macro_rules! create_fetch_task {
     }}
 }
 
-pub(crate) fn handle_fetch_initial(
+pub(crate) fn start_fetch_initial(
     model: &mut Model,
     context: &mut Env<Context, Model>,
 ) -> bool {
@@ -30,15 +30,32 @@ pub(crate) fn handle_fetch_initial(
     false
 }
 
+/// Handle response of fetch
 fn handle_response_initial(response: http::Response<String>) -> Msg {
-    // TODO: breaking up handle_response so that we can do a custom response handle here.
-    Msg::PushLogs(vec![
-        Log::info("got response".into()),
-    ])
+    let response = match handle_status(response) {
+        Ok(r) => r,
+        Err(msg) => return msg,
+    };
+
+    let body = response.into_body();
+    let response: jrpc::Response<ProjectInitialSer> =
+        expect!(json::from_str(&body), "response-serde");
+
+    let result = match response {
+        jrpc::Response::Ok(r) => r,
+        jrpc::Response::Err(err) => {
+            return Msg::RecvError(vec![Log::error(format!(
+                "<div>received jrpc Error: {:?}</div>",
+                err
+            ))]);
+        }
+    };
+
+    Msg::RecvInitial(result.result)
 }
 
 /// Send a request to fetch the project.
-pub(crate) fn handle_fetch_project(
+pub(crate) fn start_fetch_project(
     model: &mut Model,
     context: &mut Env<Context, Model>,
     reload: bool,
@@ -58,7 +75,7 @@ pub(crate) fn handle_fetch_project(
 }
 
 /// Send a request to alter/update the project and get the results.
-pub(crate) fn handle_send_update(
+pub(crate) fn start_send_update(
     model: &mut Model,
     context: &mut Env<Context, Model>,
     ids: Vec<usize>,

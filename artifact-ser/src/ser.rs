@@ -9,14 +9,14 @@ use super::{Completed, HashIm};
 
 /// The initial state of the project, stored in an `initial.json` file.
 #[derive(Debug, Serialize, Deserialize)]
-pub struct InitialProjectSer {
+pub struct ProjectInitialSer {
     pub project: Option<ProjectSer>,
-    pub ty: WebEditType,
+    pub web_type: WebType,
 }
 
 /// The type of Web Edit that the project is.
 #[derive(Debug, Serialize, Deserialize)]
-pub enum WebEditType {
+pub enum WebType {
     /// The project is editable and can be reloaded.
     Editable,
     /// The project is readonly but can be reloaded.

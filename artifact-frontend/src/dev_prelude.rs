@@ -192,6 +192,8 @@ pub(crate) enum View {
 }
 
 pub(crate) struct Model {
+    pub(crate) web_type: WebType,
+
     /// The project. TODO: rename `project`.
     pub(crate) shared: Arc<ProjectSer>,
 
@@ -317,7 +319,7 @@ pub(crate) enum Msg {
     SetGraphSearch(String),
 
     /// Received the initial project.
-    RecvInitial(InitialProjectSer),
+    RecvInitial(ProjectInitialSer),
     /// Send an HTTP request to get the project.
     FetchProject {
         reload: bool,
