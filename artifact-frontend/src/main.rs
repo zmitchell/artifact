@@ -70,7 +70,8 @@ impl Component<Context> for Model {
         };
         model.nav.search.on = true;
         model.nav.editing.on = true;
-        fetch::handle_fetch_project(&mut model, context, false);
+        // fetch::handle_fetch_project(&mut model, context, false);
+        fetch::handle_fetch_initial(&mut model, context);
         model
     }
 
@@ -100,6 +101,12 @@ fn update_model(model: &mut Model, msg: Msg, context: &mut Env<Context, Model>) 
 
         Msg::SetGraphSearch(v) => model.graph.search = v,
 
+        Msg::RecvInitial ( init ) => {
+            if let Some(project) = init.project {
+                model.shared = Arc::new(project);
+            }
+            // TODO: store the type
+        },
         Msg::FetchProject { reload } => return fetch::handle_fetch_project(model, context, reload),
         Msg::SendUpdate(ids) => return fetch::handle_send_update(model, context, ids),
         Msg::RecvProject(jid, project) => fetch::handle_recv_project(model, &jid, project),

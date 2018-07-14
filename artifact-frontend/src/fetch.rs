@@ -1,15 +1,40 @@
 use dev_prelude::*;
 use http;
 use jrpc;
+use stdweb::Value;
 
 macro_rules! create_fetch_task {
     [$ctx:ident, $jreq:ident] => {{
         let callback = $ctx.send_back(handle_response);
+        let body = json::to_string(&$jreq).expect("request-ser");
         let request = http::Request::post("/json-rpc")
-            .body(json::to_string(&$jreq).expect("request-ser"))
+            .body(Value::String(body))
             .expect("create request");
         FetchTask::new(request, callback)
     }}
+}
+
+pub(crate) fn handle_fetch_initial(
+    model: &mut Model,
+    context: &mut Env<Context, Model>,
+) -> bool {
+    if model.fetch_task.is_some() {
+        panic!("This should only be called first.")
+    }
+
+    let callback = context.send_back(handle_response_initial);
+    let request = http::Request::get("initial.json")
+        .body(Value::Null)
+        .expect("initial request");
+    model.fetch_task = Some(FetchTask::new(request, callback));
+    false
+}
+
+fn handle_response_initial(response: http::Response<String>) -> Msg {
+    // TODO: breaking up handle_response so that we can do a custom response handle here.
+    Msg::PushLogs(vec![
+        Log::info("got response".into()),
+    ])
 }
 
 /// Send a request to fetch the project.
@@ -89,16 +114,10 @@ fn new_rpc_id() -> jrpc::Id {
 
 /// Handle response of fetch
 fn handle_response(response: http::Response<String>) -> Msg {
-    let status = response.status();
-    if !status.is_success() {
-        let html = format!(
-            "<div>Received {} from server: {}</div>",
-            status,
-            response.into_body(),
-        );
-
-        return Msg::RecvError(vec![Log::error(html)]);
-    }
+    let response = match handle_status(response) {
+        Ok(r) => r,
+        Err(msg) => return msg,
+    };
 
     let body = response.into_body();
     let response: jrpc::Response<ProjectResultSer> =
@@ -115,4 +134,19 @@ fn handle_response(response: http::Response<String>) -> Msg {
     };
 
     Msg::RecvProject(result.id, Arc::new(result.result.project))
+}
+
+fn handle_status(response: http::Response<String>) -> Result<http::Response<String>, Msg> {
+    let status = response.status();
+    if !status.is_success() {
+        let html = format!(
+            "<div>Received {} from server: {}</div>",
+            status,
+            response.into_body(),
+        );
+
+        Err(Msg::RecvError(vec![Log::error(html)]))
+    } else {
+        Ok(response)
+    }
 }

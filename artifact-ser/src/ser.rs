@@ -7,6 +7,24 @@ use name::{Name, SubName};
 use lint;
 use super::{Completed, HashIm};
 
+/// The initial state of the project, stored in an `initial.json` file.
+#[derive(Debug, Serialize, Deserialize)]
+pub struct InitialProjectSer {
+    pub project: Option<ProjectSer>,
+    pub ty: WebEditType,
+}
+
+/// The type of Web Edit that the project is.
+#[derive(Debug, Serialize, Deserialize)]
+pub enum WebEditType {
+    /// The project is editable and can be reloaded.
+    Editable,
+    /// The project is readonly but can be reloaded.
+    Readonly,
+    /// The project is completely static, i.e. exported.
+    Static,
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ProjectResultSer {
     pub project: ProjectSer,

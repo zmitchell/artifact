@@ -316,6 +316,8 @@ pub(crate) enum Msg {
     /// Set the Graph `search` string.
     SetGraphSearch(String),
 
+    /// Received the initial project.
+    RecvInitial(InitialProjectSer),
     /// Send an HTTP request to get the project.
     FetchProject {
         reload: bool,
