@@ -15,14 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use std::io;
 use artifact_data::*;
 use dev_prelude::*;
+use std::io;
 
 #[derive(Debug, StructOpt)]
 #[structopt(name = "export", about = "Export artifacts in some format.")]
 pub struct Export {
-
     #[structopt(long = "verbose", short = "v", default_value = "0")]
     /// Pass many times for more log output.
     pub verbosity: u64,
@@ -31,8 +30,11 @@ pub struct Export {
     /// Use a different working directory [default: $CWD]
     pub work_dir: Option<String>,
 
-    #[structopt(name="TYPE", help="\
-The type of value to export. Supported values: [html]\n")]
+    #[structopt(
+        name = "TYPE",
+        help = "\
+                The type of value to export. Supported values: [html]\n"
+    )]
     pub type_: Option<String>,
 }
 
@@ -48,4 +50,3 @@ pub fn run(cmd: Export) -> Result<i32> {
     unimplemented!();
     Ok(0)
 }
-

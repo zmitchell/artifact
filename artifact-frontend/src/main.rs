@@ -106,7 +106,11 @@ fn update_model(model: &mut Model, msg: Msg, context: &mut Env<Context, Model>) 
                 model.shared = Arc::new(project);
             }
             model.web_type = init.web_type;
-            fetch::start_fetch_project(model, context, false);
+            model.fetch_task = None;
+
+            if model.web_type != WebType::Static {
+                fetch::start_fetch_project(model, context, false);
+            }
         },
         Msg::FetchProject { reload } => return fetch::start_fetch_project(model, context, reload),
         Msg::SendUpdate(ids) => return fetch::start_send_update(model, context, ids),

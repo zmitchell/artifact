@@ -52,6 +52,7 @@ mod dev_prelude;
 mod check;
 mod export;
 mod fmt;
+mod frontend;
 mod init;
 mod ls;
 mod serve;

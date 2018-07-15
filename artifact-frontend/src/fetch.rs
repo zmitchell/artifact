@@ -38,21 +38,10 @@ fn handle_response_initial(response: http::Response<String>) -> Msg {
     };
 
     let body = response.into_body();
-    println!("body: {}", body);
-    let response: jrpc::Response<ProjectInitialSer> =
+    let init: ProjectInitialSer =
         expect!(json::from_str(&body), "response-serde");
 
-    let result = match response {
-        jrpc::Response::Ok(r) => r,
-        jrpc::Response::Err(err) => {
-            return Msg::RecvError(vec![Log::error(format!(
-                "<div>received jrpc Error: {:?}</div>",
-                err
-            ))]);
-        }
-    };
-
-    Msg::RecvInitial(result.result)
+    Msg::RecvInitial(init)
 }
 
 /// Send a request to fetch the project.
@@ -61,6 +50,11 @@ pub(crate) fn start_fetch_project(
     context: &mut Env<Context, Model>,
     reload: bool,
 ) -> bool {
+    if model.web_type == WebType::Static {
+        push_logs_fetch_invalid(model);
+        return false;
+    }
+
     if model.fetch_task.is_some() {
         push_logs_fetch_in_progress(model);
         false
@@ -125,6 +119,14 @@ fn push_logs_fetch_in_progress(model: &mut Model) {
         "<div>A fetch is already in progress, try again later.</div>".to_string(),
     )]);
 }
+
+fn push_logs_fetch_invalid(model: &mut Model) {
+    model.push_logs(vec![Log::error(
+        "<div>Internal Error: a fetch was invalid and \
+        should not have been possible</div>".to_string(),
+    )]);
+}
+
 
 fn new_rpc_id() -> jrpc::Id {
     jrpc::Id::Int(new_id() as i64)

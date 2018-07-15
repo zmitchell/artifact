@@ -79,19 +79,7 @@ pub(crate) fn view_nav(model: &Model, view: ViewResult) -> HtmlApp {
                 <span class=ML1,>{ "Graph" }</span>
             </button>
 
-            <button class=(BTN, REGULAR), id="TEST",
-             onclick=|_| {
-                Msg::PushLogs(vec![
-                    Log::error(format!(
-                        "<span>Created error at: {}</span>",
-                        ::stdweb::web::Date::now(),
-                    )),
-                ])
-             },
-             title="TESTING",
-             >
-                <span>{ "TEST" }</span>
-            </button>
+            <span>{ format!("Type={:?}", model.web_type) }</span>
 
             { view.nav_extra.unwrap_or_else(|| html![<>{ "|" }</>]) }
 

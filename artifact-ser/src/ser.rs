@@ -15,7 +15,7 @@ pub struct ProjectInitialSer {
 }
 
 /// The type of Web Edit that the project is.
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Eq, PartialEq)]
 pub enum WebType {
     /// The project is editable and can be reloaded.
     Editable,
