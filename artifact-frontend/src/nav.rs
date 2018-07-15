@@ -79,9 +79,17 @@ pub(crate) fn view_nav(model: &Model, view: ViewResult) -> HtmlApp {
                 <span class=ML1,>{ "Graph" }</span>
             </button>
 
-            <span>{ format!("Type={:?}", model.web_type) }</span>
+            <a class=(BTN, REGULAR), id="docs",
+             title="View Docs",
+             href="docs/index.html",
+             >
+                { fa_icon(FA_BOOK) }
+                <span class=ML1,>{ "Docs" }</span>
+            </a>
 
-            { view.nav_extra.unwrap_or_else(|| html![<>{ "|" }</>]) }
+            <span class=(BORDER, MR1),></span>
+
+            { view.nav_extra.unwrap_or_else(|| html![<></>]) }
 
         </div>
 

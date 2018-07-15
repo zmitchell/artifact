@@ -140,6 +140,7 @@ pub(crate) const LG_COL_12: &str = "lg-col-12";
 
 // Font Awesome
 pub(crate) const FA: &str = "fas";
+pub(crate) const FA_BOOK: &str = "fa-book";
 pub(crate) const FA_GRAPH: &str = "fa-code-branch";
 pub(crate) const FA_INFO_CIRCLE: &str = "fa-info-circle";
 pub(crate) const FA_EDIT: &str = "fa-edit";
