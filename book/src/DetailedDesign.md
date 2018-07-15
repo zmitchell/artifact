@@ -43,15 +43,9 @@ There are a few things here, so let's take a look:
 
 Let's also define a couple of unit tests.
 
-> In the _real world_ you would probably not define unit tests in your design
-> documents for most SPC (since most functions are self explanatory
-> of how to unit test them).
->
-> However, we are going to do so here for demonstration pruposes.
->
 > Personally I like to create a single `TST-unit` which I link to all
 > lower-level items and create subarts for each of them. This is one area where
-> there could be improvement in artifact (maybe TST subarts, i.e.
+> there could definitely be improvement in artifact (maybe .TST-subarts, i.e.
 > `SPC-name.tst-invalid` which complete testing?)
 
 ```markdown
