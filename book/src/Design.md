@@ -11,7 +11,7 @@ down the approach you plan to take. This is important because:
 Your high level requirements should go in your `README.md`, just below your purpose
 section:
 
-```
+```markdown
 # Execution Method
 The minimum viable product shall be a command line utility
 that is given the path to one or more question files as

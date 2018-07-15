@@ -15,8 +15,8 @@
   - [Vocabulary](./Vocabulary.md)
   - [Tools](./Tools.md)
   - [Artifact Intro](./ArtifactIntro.md)
-
-- [InteractiveOld](./InteractiveOld.md)
+  - [Detailed Design](./DetailedDesign.md)
+  - [Implementation](./Implementation.md)
 
 - [Addendum](./Addendum.md)
   - [FAQ](./FAQ.md)

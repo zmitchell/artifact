@@ -10,7 +10,7 @@ are going to use artifact to track them.
 Open up your `README.md` in your favorite plain-text editor and write out
 something like the following:
 
-```
+```markdown
 # Purpose:
 Write a flash card quizzer from scratch and learn about
 quality best practices while doing so.
