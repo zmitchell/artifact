@@ -19,7 +19,7 @@ pub(crate) fn unpack_frontend<P: AsRef<Path>>(
 
     let init_s = expect!(json::to_string(init));
 
-    let mut init_f = PathFile::new(dir.join("initial.json"))?;
+    let init_f = PathFile::new(dir.join("initial.json"))?;
     init_f.write_str(&init_s)?;
 
     Ok(())
