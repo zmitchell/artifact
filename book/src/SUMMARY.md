@@ -17,6 +17,7 @@
   - [Artifact Intro](./ArtifactIntro.md)
   - [Detailed Design](./DetailedDesign.md)
   - [Implementation](./Implementation.md)
+  - [Errors](./Errors.md)
 
 - [Addendum](./Addendum.md)
   - [FAQ](./FAQ.md)
