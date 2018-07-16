@@ -24,7 +24,6 @@
   - [FAQ](./FAQ.md)
   - [Best Practices](./BestPractices.md)
   - [Exporting Html](./ExportingHtml.md)
-  - [Specification](./SPECIFICATION.md)
-  - [Exporting Html](./ExportingHtml.md)
   - [Feedback](./Feedback.md)
+  - [Specification](./SPECIFICATION.md)
   - [License](./License.md)
