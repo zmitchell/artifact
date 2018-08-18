@@ -1,14 +1,14 @@
-# Based on the "trust" template v0.1.1
-# https://github.com/japaric/trust/tree/v0.1.1
+# Based on the "trust" template v0.1.2
+# https://github.com/japaric/trust/tree/v0.1.2
 
 environment:
   global:
-  # This is the Rust channel that build jobs will use by default but can be
+  # TODO This is the Rust channel that build jobs will use by default but can be
   # overridden on a case by case basis down below
-    RUST_VERSION: nightly
-    #RUST_VERSION: nightly-2017-08-31
+    RUST_VERSION: stable
 
-    CRATE_NAME: artifact-app
+    # TODO Update this to match the name of your project.
+    CRATE_NAME: trust
 
   # TODO These are all the build jobs. Adjust as necessary. Comment out what you
   # don't need
@@ -18,17 +18,14 @@ environment:
     - TARGET: x86_64-pc-windows-gnu
 
     # MSVC
-    # These are NOT statically linked and I can't seem to get
-    # them to be. Also the gcc builds seem to work just fine for
-    # Windows10. So disabling these.
-    # - TARGET: i686-pc-windows-msvc
-    # - TARGET: x86_64-pc-windows-msvc
+    - TARGET: i686-pc-windows-msvc
+    - TARGET: x86_64-pc-windows-msvc
 
-    ## Testing other channels
-    #- TARGET: x86_64-pc-windows-gnu
-    #  RUST_VERSION: beta
-    #- TARGET: x86_64-pc-windows-msvc
-    #  RUST_VERSION: beta
+    # Testing other channels
+    - TARGET: x86_64-pc-windows-gnu
+      RUST_VERSION: nightly
+    - TARGET: x86_64-pc-windows-msvc
+      RUST_VERSION: nightly
 
 install:
   - ps: >-
@@ -42,41 +39,41 @@ install:
   - set PATH=%PATH%;C:\Users\appveyor\.cargo\bin
   - rustc -Vv
   - cargo -V
-  - cargo install cargo-web
-  - cargo install mdbook
 
 # TODO This is the "test phase", tweak it as you see fit
 test_script:
   # we don't run the "test phase" when doing deploys
   - if [%APPVEYOR_REPO_TAG%]==[false] (
+      cargo build --target %TARGET% &&
+      cargo build --target %TARGET% --release &&
       cargo test --target %TARGET% &&
-      cargo run --target %TARGET% -- check &&
-      cargo rustc --target %TARGET% --release --bin art -- -C lto
+      cargo test --target %TARGET% --release &&
+      cargo run --target %TARGET% &&
+      cargo run --target %TARGET% --release
     )
 
-# before_deploy:
-#   # theoretically this is how you link statically... doesn't work anymore
-#   # - cargo rustc --target %TARGET% --release --bin art -- -Z unstable-options -C lto -C target-feature=+crt-static
-#   - cargo rustc --target %TARGET% --release --bin art -- -C lto
-#   - ps: ci\before_deploy.ps1
+before_deploy:
+  # TODO Update this to build the artifacts that matter to you
+  - cargo rustc --target %TARGET% --release --bin hello -- -C lto
+  - ps: ci\before_deploy.ps1
 
-# deploy:
-#   artifact: /.*\.zip/
-#   # `auth_token.secure`
-#   # - Create a `public_repo` GitHub token. Go to: https://github.com/settings/tokens/new
-#   # - Encrypt it. Go to https://ci.appveyor.com/tools/encrypt
-#   # - Paste the output down here
-#   auth_token:
-#     secure: e2pyiI8N9p6VD2W2ZdetwUTm7FsBBQ7E7dsHpR3b5GzH+qE2JgjS9XYRjo72SwwF
-#   description: ''
-#   on:
-#     # Pick which targets will generate binary releases
-#     # In this example, there are some targets that are tested using the stable
-#     # and nightly channels. This condition makes sure there is only one release
-#     # for such targets and that's generated using the stable channel
-#     #RUST_VERSION: stable
-#     appveyor_repo_tag: true
-#   provider: GitHub
+deploy:
+  artifact: /.*\.zip/
+  # TODO update `auth_token.secure`
+  # - Create a `public_repo` GitHub token. Go to: https://github.com/settings/tokens/new
+  # - Encrypt it. Go to https://ci.appveyor.com/tools/encrypt
+  # - Paste the output down here
+  auth_token:
+    secure: t3puM/2hOig26EHhAodcZBc61NywF7/PFEpimR6SwGaCiqS07KR5i7iAhSABmBp7
+  description: ''
+  on:
+    # TODO Here you can pick which targets will generate binary releases
+    # In this example, there are some targets that are tested using the stable
+    # and nightly channels. This condition makes sure there is only one release
+    # for such targets and that's generated using the stable channel
+    RUST_VERSION: stable
+    appveyor_repo_tag: true
+  provider: GitHub
 
 cache:
   - C:\Users\appveyor\.cargo\registry
@@ -85,12 +82,12 @@ cache:
 branches:
   only:
     # Release tags
-    - /^\d+\.\d+\.\d+.*$/
+    - /^v\d+\.\d+\.\d+.*$/
     - master
 
 notifications:
   - provider: Email
     on_build_success: false
 
-# disable automatic builds
+# Building is done in the test phase, so we disable Appveyor's build phase.
 build: false
