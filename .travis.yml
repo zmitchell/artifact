@@ -15,12 +15,13 @@ env:
   global:
     - CRATE_NAME=artifact-app
     - RUST_BACKTRACE: full
-  - TEST_DIR=""
-  - TEST_DIR=artifact-data
-  - TEST_DIR=artifact-frontend
-  - TEST_DIR=artifact-lib
-  - TEST_DIR=artifact-ser
-  - TEST_DIR=artifact-test
+  matrix:
+    - TEST_DIR=""
+    - TEST_DIR=artifact-data
+    - TEST_DIR=artifact-frontend
+    - TEST_DIR=artifact-lib
+    - TEST_DIR=artifact-ser
+    - TEST_DIR=artifact-test
 
 matrix:
   include:
