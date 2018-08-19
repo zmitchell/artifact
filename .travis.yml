@@ -60,7 +60,9 @@ before_install:
   - rustup self update
 
 install:
-  - sh ci/install.sh
+  # - sh ci/install.sh
+  - cargo install cargo-web
+  - cargo install mdbook
   - source ~/.cargo/env || true
 
 script:
