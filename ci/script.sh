@@ -9,9 +9,12 @@ main() {
     if [ ! -z $DISABLE_TESTS ]; then
         return
     fi
-    cd $TEST_DIR
-    cross test --target $TARGET
-    cross test --target $TARGET --release
+    if [ -z $TEST_DIR ]; then
+        cd $TEST_DIR
+    fi
+    # cross test --target $TARGET
+    # cross test --target $TARGET --release
+    cargo test
 
 }
 
