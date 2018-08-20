@@ -6,10 +6,7 @@ language: rust
 services: docker
 sudo: required
 
-rust:
-  - stable
-  - beta
-  - nightly
+rust: nightly
 
 os:
   - linux
@@ -18,42 +15,6 @@ env:
   global:
     - CRATE_NAME=artifact-app
     - RUST_BACKTRACE: full
-  matrix:
-    - TEST_DIR=""
-    - TEST_DIR=artifact-data
-    - TEST_DIR=artifact-frontend
-    - TEST_DIR=artifact-lib
-    - TEST_DIR=artifact-ser
-    - TEST_DIR=artifact-test
-
-# matrix:
-  # include:
-    # # Linux
-    # - env: TARGET=i686-unknown-linux-gnu
-    # - env: TARGET=i686-unknown-linux-musl
-    # - env: TARGET=x86_64-unknown-linux-gnu
-    # - env: TARGET=x86_64-unknown-linux-musl
-
-    # # OSX
-    # - env: TARGET=i686-apple-darwin
-    #   os: osx
-    # - env: TARGET=x86_64-apple-darwin
-    #   os: osx
-
-    # # *BSD
-    # - env: TARGET=i686-unknown-freebsd DISABLE_TESTS=1
-    # - env: TARGET=x86_64-unknown-freebsd DISABLE_TESTS=1
-    # - env: TARGET=x86_64-unknown-netbsd DISABLE_TESTS=1
-
-    # # Windows
-    # - env: TARGET=x86_64-pc-windows-gnu
-
-    # # Testing other channels
-    # - env: TARGET=x86_64-unknown-linux-gnu
-    #   rust: nightly
-    # - env: TARGET=x86_64-apple-darwin
-    #   os: osx
-    #   rust: nightly
 
 before_install:
   - set -e
