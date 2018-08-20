@@ -22,8 +22,8 @@ before_install:
   - rustup self update
 
 install:
-  - cargo install cargo-web
-  - cargo install mdbook
+  - if ! (hash cargo-web 2>/dev/null); then cargo install cargo-web; fi
+  - if ! (hash mdbook 2>/dev/null); then cargo install mdbook; fi
   - source ~/.cargo/env || true
 
 script:
