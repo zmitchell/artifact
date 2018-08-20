@@ -2,6 +2,7 @@
 //! - #TST-unit.raw_name
 //! - #TST-fuzz.raw_name
 extern crate artifact_test;
+#[macro_use] extern crate serde_derive;
 use artifact_test::artifact_data::raw_names::NamesRaw;
 use artifact_test::raw_names::*;
 use artifact_test::*;
